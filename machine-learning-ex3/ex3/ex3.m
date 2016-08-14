@@ -54,8 +54,10 @@ pause;
 
 fprintf('\nTraining One-vs-All Logistic Regression...\n')
 
+trainIndex = round(0.9*m);
+
 lambda = 0.1;
-[all_theta] = oneVsAll(X, y, num_labels, lambda);
+[all_theta] = oneVsAll(X(1:trainIndex, :), y(1:trainIndex), num_labels, lambda);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -63,7 +65,6 @@ pause;
 
 %% ================ Part 3: Predict for One-Vs-All ================
 %  After ...
-pred = predictOneVsAll(all_theta, X);
-
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
+pred = predictOneVsAll(all_theta, X(1:trainIndex, :));
+fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y(1:trainIndex))) * 100);
 
